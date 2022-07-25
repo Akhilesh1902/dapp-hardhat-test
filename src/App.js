@@ -1,11 +1,11 @@
-import { ethers } from "ethers";
-import Manager from "./artifacts/contracts/Manager.sol/Manager.json";
-import { useState, useEffect } from "react";
-import "./App.css";
+import { ethers } from 'ethers';
+import Manager from './artifacts/contracts/Manager.sol/Manager.json';
+import { useState, useEffect } from 'react';
+import './App.css';
 
 function App() {
-  const [name, setName] = useState("");
-  const [account, setAccount] = useState("");
+  const [name, setName] = useState('');
+  const [account, setAccount] = useState('');
   const [contract, setContract] = useState(null);
   const [tickets, setTickets] = useState([]);
 
@@ -20,7 +20,7 @@ function App() {
     getTickets();
   };
   const renameTicket = async (_index) => {
-    let newName = prompt("Please Enter a new name : ", "");
+    let newName = prompt('Please Enter a new name : ', '');
     const transaction = await contract.updateTicket(_index, newName);
     await transaction.wait();
     getTickets();
@@ -32,21 +32,21 @@ function App() {
   };
 
   const initConnection = async () => {
-    if (typeof window.ethereum !== "undefined") {
+    if (typeof window.ethereum !== 'undefined') {
       const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
+        method: 'eth_requestAccounts',
       });
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const newSigner = provider.getSigner();
       setAccount(accounts[0]);
       setContract(
         new ethers.Contract(
-          "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+          '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
           Manager.abi,
           newSigner
         )
       );
-    } else console.log("please install metamask");
+    } else console.log('please install metamask');
   };
 
   useEffect(() => {
@@ -56,64 +56,61 @@ function App() {
   // console.log(contract);
 
   return (
-    <div className="page">
-      <div className="header">
+    <div className='page'>
+      <div className='header'>
         <p>Task Manager</p>
-        {account !== "" ? (
+        {account !== '' ? (
           <p>{account.substring(0, 9)}</p>
         ) : (
-          <button className="big-button" onClick={initConnection}>
+          <button className='big-button' onClick={initConnection}>
             connect
           </button>
         )}
       </div>
-      <div className="input_section">
+      <div className='input_section'>
         <div>
-          <button className="big_button" onClick={() => createTicket(name)}>
+          <button className='big_button' onClick={() => createTicket(name)}>
             Create Ticket
           </button>
           <input
-            type="text"
-            className="input"
+            type='text'
+            className='input'
             onChange={(e) => setName(e.target.value)}
-            placeholder="ticket Name"
+            placeholder='ticket Name'
           />
         </div>
-        <button className="big_button" onClick={getTickets}>
+        <button className='big_button' onClick={getTickets}>
           Load Data
         </button>
       </div>
-      <div className="main">
-        <div className="main-col" style={{ background: "lightPink" }}>
-          <div className="main-col-heading">Todo</div>
+      <div className='main'>
+        <div className='main-col' style={{ background: 'lightPink' }}>
+          <div className='main-col-heading'>Todo</div>
           {tickets
             .map((t, i) => ({ id: i, item: t }))
             .filter((t) => t.item.status === 0)
             .map((ticket, i) => {
               return (
-                <div key={i} className="main_ticket_card">
-                  <p className="main_ticket_card_id">#{ticket.id}</p>
+                <div key={i} className='main_ticket_card'>
+                  <p className='main_ticket_card_id'>#{ticket.id}</p>
                   <p>{ticket.item.name}</p>
-                  <div className="main_ticket_button_section ">
+                  <div className='main_ticket_button_section '>
                     <button
-                      style={{ backgroundColor: "lightBlue" }}
-                      className="small_button"
-                      onClick={() => updateTicket(ticket.id, 1)}
-                    >
+                      style={{ backgroundColor: 'lightBlue' }}
+                      className='small_button'
+                      onClick={() => updateTicket(ticket.id, 1)}>
                       Busy
                     </button>
                     <button
-                      style={{ backgroundColor: "lightGreen" }}
-                      className="small_button"
-                      onClick={() => updateTicket(ticket.id, 2)}
-                    >
+                      style={{ backgroundColor: 'lightGreen' }}
+                      className='small_button'
+                      onClick={() => updateTicket(ticket.id, 2)}>
                       Done
                     </button>
                     <button
-                      style={{ backgroundColor: "lightGray" }}
-                      className="small_button"
-                      onClick={() => renameTicket(ticket.id)}
-                    >
+                      style={{ backgroundColor: 'lightGray' }}
+                      className='small_button'
+                      onClick={() => renameTicket(ticket.id)}>
                       Rename
                     </button>
                   </div>
@@ -121,36 +118,33 @@ function App() {
               );
             })}
         </div>
-        <div className="main-col" style={{ background: "Cyan" }}>
-          <div className="main-col-heading">Busy</div>
+        <div className='main-col' style={{ background: 'Cyan' }}>
+          <div className='main-col-heading'>Busy</div>
           {tickets
             .map((t, i) => ({ id: i, item: t }))
             .filter((t) => t.item.status === 1)
             .map((ticket, i) => {
               return (
-                <div key={i} className="main_ticket_card">
-                  <p className="main_ticket_card_id">#{ticket.id}</p>
+                <div key={i} className='main_ticket_card'>
+                  <p className='main_ticket_card_id'>#{ticket.id}</p>
                   <p>{ticket.item.name}</p>
-                  <div className="main_ticket_button_section ">
+                  <div className='main_ticket_button_section '>
                     <button
-                      style={{ backgroundColor: "lightPink" }}
-                      className="small_button"
-                      onClick={() => updateTicket(ticket.id, 0)}
-                    >
+                      style={{ backgroundColor: 'lightPink' }}
+                      className='small_button'
+                      onClick={() => updateTicket(ticket.id, 0)}>
                       Todo
                     </button>
                     <button
-                      style={{ backgroundColor: "lightGreen" }}
-                      className="small_button"
-                      onClick={() => updateTicket(ticket.id, 2)}
-                    >
+                      style={{ backgroundColor: 'lightGreen' }}
+                      className='small_button'
+                      onClick={() => updateTicket(ticket.id, 2)}>
                       Done
                     </button>
                     <button
-                      style={{ backgroundColor: "lightGray" }}
-                      className="small_button"
-                      onClick={() => renameTicket(ticket.id)}
-                    >
+                      style={{ backgroundColor: 'lightGray' }}
+                      className='small_button'
+                      onClick={() => renameTicket(ticket.id)}>
                       Rename
                     </button>
                   </div>
@@ -158,36 +152,33 @@ function App() {
               );
             })}
         </div>
-        <div className="main-col" style={{ background: "lightBlue" }}>
-          <div className="main-col-heading">Done</div>
+        <div className='main-col' style={{ background: 'lightBlue' }}>
+          <div className='main-col-heading'>Done</div>
           {tickets
             .map((t, i) => ({ id: i, item: t }))
             .filter((t) => t.item.status === 2)
             .map((ticket, i) => {
               return (
-                <div key={i} className="main_ticket_card">
-                  <p className="main_ticket_card_id">#{ticket.id}</p>
+                <div key={i} className='main_ticket_card'>
+                  <p className='main_ticket_card_id'>#{ticket.id}</p>
                   <p>{ticket.item.name}</p>
-                  <div className="main_ticket_button_section ">
+                  <div className='main_ticket_button_section '>
                     <button
-                      style={{ backgroundColor: "lightPink" }}
-                      className="small_button"
-                      onClick={() => updateTicket(ticket.id, 0)}
-                    >
+                      style={{ backgroundColor: 'lightPink' }}
+                      className='small_button'
+                      onClick={() => updateTicket(ticket.id, 0)}>
                       Todo
                     </button>
                     <button
-                      style={{ backgroundColor: "lightBlue" }}
-                      className="small_button"
-                      onClick={() => updateTicket(ticket.id, 1)}
-                    >
+                      style={{ backgroundColor: 'lightBlue' }}
+                      className='small_button'
+                      onClick={() => updateTicket(ticket.id, 1)}>
                       Busy
                     </button>
                     <button
-                      style={{ backgroundColor: "lightGray" }}
-                      className="small_button"
-                      onClick={() => renameTicket(ticket.id)}
-                    >
+                      style={{ backgroundColor: 'lightGray' }}
+                      className='small_button'
+                      onClick={() => renameTicket(ticket.id)}>
                       Rename
                     </button>
                   </div>
