@@ -1,7 +1,8 @@
 import { ethers } from 'ethers';
-import Manager from './artifacts/contracts/Manager.sol/Manager.json';
+// import Manager from './artifacts/contracts/Manager.sol/Manager.json';
 import { useState, useEffect } from 'react';
 import './App.css';
+import abi from './abi.json';
 
 function App() {
   const [name, setName] = useState('');
@@ -42,7 +43,8 @@ function App() {
       setContract(
         new ethers.Contract(
           '0xc6a644cf5452f45c07d91612f152A8aF283063b9',
-          Manager.abi,
+          // Manager.abi,
+          abi,
           newSigner
         )
       );
